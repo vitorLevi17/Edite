@@ -1,0 +1,14 @@
+{% extends "paginaInicial.html"%}
+
+{%block body%}
+
+{% include "barraNavegacao.html" %}
+
+<h1>FEED PRINCIPAL</h1>
+
+{% for foto in fotos%}
+  <a href="{{ url_for('perfil', id_usuario=foto.id) }}"> <img src="{{url_for('static', filename='fotos_posts/{}'.format(foto.imagem))}}">
+
+{%endfor%}
+
+{% endblock %}
