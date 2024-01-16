@@ -1,0 +1,32 @@
+{% extends "paginaInicial.html" %}
+
+
+{% block titulo %}
+
+    Criar Conta no EDITE
+
+{% endblock %}
+
+{%block form%}
+<form method="POST">
+
+    {{ form.csrf_token }}
+
+    {{ form.nome.label() }}
+    {{ form.nome() }}
+
+    {{ form.email.label() }}
+    {{ form.email() }}
+
+    {{ form.senha.label() }}
+    {{ form.senha() }}
+
+    {{ form.conf_senha.label() }}
+    {{ form.conf_senha() }}
+
+    {{ form.bt_confirme() }}
+
+</form>
+<a href="{{ url_for ('paginaInicial')}}" >Crie sua conta</a>
+{% endblock %}
+
