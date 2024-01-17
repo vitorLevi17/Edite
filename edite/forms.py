@@ -16,6 +16,11 @@ class FormCriarConta(FlaskForm):
     conf_senha = PasswordField("Senha", validators=[DataRequired(), EqualTo("senha")])
     bt_confirme = SubmitField("Criar conta")
 
+    def validate_email(self, email):
+        usuario = Usuario.query.filter_by(email = email.data).first()
+        if usuario:
+            return ValidationError("Email já cadastrado, use outro")
+
 
 class FormFoto(FlaskForm):
     foto = FileField("foto",validators = [DataRequired()])
@@ -23,9 +28,6 @@ class FormFoto(FlaskForm):
 
 
 
-def validate_email(self, email):
-    usuario = Usuario.query.filter_by(email = email.data).first()
-    if usuario:
-        return ValidationError("Email já cadastrado, use outro")
+    
 
 
