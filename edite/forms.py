@@ -6,7 +6,7 @@ from edite.models import Usuario
 
 class FormLogin(FlaskForm):
     email = StringField("E-mail", validators = [DataRequired(),Email()])
-    senha = PasswordField("Senha")
+    senha = PasswordField("Senha", validators=[DataRequired()])
     bt_confirme = SubmitField("Entrar")
 
 class FormCriarConta(FlaskForm):
@@ -28,6 +28,6 @@ class FormFoto(FlaskForm):
 
 
 
-    
+
 
 

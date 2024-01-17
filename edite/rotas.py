@@ -31,7 +31,7 @@ def criarconta():
         database.session.add(usuario)
         database.session.commit()
         login_user(usuario, remember=True)
-        return redirect(url_for("perfil", usuario = usuario.id))
+        return redirect(url_for("perfil", id_usuario = usuario.id))
     return render_template("criarconta.html", form=formCriarConta)
 
 
@@ -39,8 +39,9 @@ def criarconta():
 @login_required
 def perfil(id_usuario):
     ##USUARIO = USUARIO
+
     if int(id_usuario) == int(current_user.id):
-        form_foto=FormFoto()
+        form_foto = FormFoto()
         if form_foto.validate_on_submit():
             arquivo = form_foto.foto.data
             nome_seguro = secure_filename(arquivo.filename)
@@ -50,18 +51,18 @@ def perfil(id_usuario):
             database.session.add(foto)
             database.session.commit()
 
-
         return render_template("perfil.html", usuario = current_user,form = form_foto)
 
     else:
         ##USUARIO /= USUARIO
+
         usuario = Usuario.query.get(int(id_usuario))
         return render_template("perfil.html", usuario  = usuario, form = None)
 
 @app.route("/logout")
 @login_required
 def logout():
-    login_user(current_user)
+    login_user(current_user) ##possivel erro
     return redirect(url_for("paginaInicial"))
 
 @app.route("/feed")

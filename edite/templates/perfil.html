@@ -4,37 +4,29 @@
 Perfil - {{usuario.nome}}
 {% endblock %}
 
-{% block body %}
+{% block body%}
 <body>
 {% include "barraNavegacao.html" %}
 
 <h1>{{usuario.nome}} Seja bem-vindo ao seu perfil</h1>
 
+{% if form %}
+{% block form %}
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token }}
 
-{% if form%}
-<form method="POST" enctype="multipart/form-data">
-
-    {{ form.csrf_token }}
-
-
-    {{ form.foto.label}}
-    {{ form.foto}}
-    {{ form.bt_confirme }}
-</form>
-{% endif%}
-
+        {{ form.foto.label }}
+        {{ form.foto }}
+        {{ form.bt_confirme }}
+    </form>
+{% endblock %}
+{% endif %}
 
 
-{% for foto in usuario.fotos%}
-     <img src="{{url_for('static', filename='fotos_posts/{}'.format(foto.imagem))}}">
-
-
-{%endfor%}
-
+{% for foto in usuario.fotos %}
+    <img src="{{url_for('static', filename='fotos_posts/{}'.format(foto.imagem))}}">
+{% endfor %}
 
 </body>
 {% endblock %}
-</html>
-
-
 
