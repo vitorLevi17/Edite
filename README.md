@@ -1,32 +1,29 @@
-Edite 1.0 - Projeto Semelhante ao Pinterest
-Bem-vindo ao projeto Edite! Este é um projeto inspirado no Pinterest, onde os usuários podem salvar e visualizar fotos compartilhadas por outros usuários. A plataforma permite a criação de uma conta, o login seguro e a interação com diversas imagens compartilhadas por uma comunidade de usuários.
+Edite 1.0
+Bem-vindo ao projeto Edite! 
+Este é um projeto inspirado no Pinterest, onde os usuários podem salvar e visualizar fotos compartilhadas por outros usuários. A plataforma permite a criação de uma conta, o login seguro e a interação com diversas imagens compartilhadas por uma comunidade de usuários.
 
 Funcionalidades Principais
 Cadastro e Login:
 
 Os usuários podem criar uma conta fornecendo um e-mail e senha seguros.
 O login é seguro, garantindo a autenticação adequada.
+
 Painel Principal:
-
 Exibição de imagens compartilhadas por outros usuários.
-Funcionalidade de "pin" ou "salvar" imagens interessantes para o próprio perfil.
-Perfil do Usuário:
 
+Perfil do Usuário:
 Visualização das imagens salvas no perfil do usuário.
 Informações do perfil e possibilidade de atualizar dados.
-Explorar:
 
+Explorar:
 Navegação e descoberta de novas imagens através de uma seção de exploração.
 Interatividade:
 
-Possibilidade de curtir, comentar e compartilhar imagens com outros usuários.
-Tecnologias Utilizadas
 Frontend:
-
 HTML, CSS, JavaScript
 Jinja2 (para renderização de templates no Flask)
-Backend:
 
+Backend:
 Python (Flask framework)
 SQLite (Banco de dados)
 Instruções de Uso
@@ -35,8 +32,8 @@ Clone o Repositório:
 bash
 Copy code
 git clone https://github.com/seu-usuario/seu-repositorio.git
-Instale Dependências:
 
+Instale Dependências:
 bash
 Copy code
 cd nome-do-projeto
@@ -44,8 +41,8 @@ pip install -r requirements.txt
 Configure o Ambiente:
 
 Configure as variáveis de ambiente no arquivo .env.
-Execute a Aplicação:
 
+Execute a Aplicação:
 bash
 Copy code
 flask run
