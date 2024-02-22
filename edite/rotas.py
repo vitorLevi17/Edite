@@ -72,4 +72,42 @@ def feed():
     return render_template("feed.html", fotos=fotos)
 
 
+@app.route("/edicao/<id_usuario>", methods = ["GET" , "POST"])
+@login_required
+def edicao(id_usuario):
+    if int(id_usuario) == int(current_user.id):
+        form_foto = FormFotoEditar()
+        if form_foto.validate_on_submit():
+            arquivo = form_foto.foto_edi.data
+            nome_seguro = secure_filename(arquivo.filename)
+            caminho = os.path.join(os.path.dirname(__file__), app.config["UPLOAD_FOLDER"], nome_seguro)
+
+            action = form_foto.action.data
+
+            if action == "pre_bra":
+                arquivo.save(caminho)
+                img = Image.open(caminho)
+                img_pb = img.convert('L')
+                img_pb.save(caminho)
+                foto = Foto(imagem=nome_seguro, id_usuario=current_user.id)
+                database.session.add(foto)
+                database.session.commit()
+
+
+
+            elif action == "sem_fundo":
+                pass
+            elif action == "espelhar_imagem":
+                pass
+
+            elif action == "comprimir":
+                pass
+
+        return render_template("edicao.html", usuario=current_user, form=form_foto)
+
+    else:
+        ##USUARIO /= USUARIO
+        usuario = Usuario.query.get(int(id_usuario))
+        return render_template("edicao.html", usuario=usuario, form=None)
+
 

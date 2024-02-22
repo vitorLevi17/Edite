@@ -1,0 +1,89 @@
+{% extends "paginaInicial.html" %}
+
+{% block titulo %}
+Perfil - {{usuario.nome}}
+{% endblock %}
+
+{% block body%}
+<body>
+
+{% include "barraNavegacao.html" %}
+
+
+
+<div class="container">
+
+{% if form %}
+
+    <h1>{{usuario.nome}}, vamos por a mão na massa</h1>
+
+    <form class="bloco-add-img" method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+
+        <input type="hidden" name="action" id="selected-action">
+
+        <h2>{{ usuario.nome }} , Selecione um arquivo pra começar</h2>
+
+        <div class="bloco-arquivo">
+            <label for="foto" class="botao-arquivo">
+                Selecione a foto
+            {{ form.foto_edi(class="input-arquivo", id="foto")}}
+
+            </label>
+            <span id="imagem-arquivo" class=""></span>
+
+        </div>
+
+
+        {{ form.bt_pre_bra()}}
+        {{ form.bt_sem_fundo()}}
+        {{ form.bt_espelhar_imagem()}}
+        {{ form.bt_comprimir()}}
+
+
+    </form>
+
+    {% else %}
+<div class="bloco-add-img">
+    <h2>{{ usuario.nome }} - Ver Perfil</h2>
+</div>
+    {% endif %}
+
+
+
+</div>
+
+ <script>
+      let input = document.getElementById("foto");
+      let imagemArquivo = document.getElementById("imagem-arquivo");
+
+      input.addEventListener("change", () => {
+        let inputImagem = document.querySelector("input[type=file]").files[0];
+
+        imagemArquivo.classList.add("visivel");
+        imagemArquivo.innerText = inputImagem.name;
+
+     function setAction(action) {
+        document.getElementById('selected-action').value = action;
+    }
+
+    // Adicione eventos de clique aos botões para definir a ação
+    document.getElementById('bt_pre_bra').addEventListener('click', function() {
+        setAction('pre_bra');
+    });
+    document.getElementById('bt_sem_fundo').addEventListener('click', function() {
+        setAction('sem_fundo');
+    });
+    document.getElementById('bt_espelhar_imagem').addEventListener('click', function() {
+        setAction('espelhar_imagem');
+    });
+    document.getElementById('bt_comprimir').addEventListener('click', function() {
+        setAction('comprimir');
+    });
+      });
+
+
+    </script>
+
+    </body>
+{% endblock %}

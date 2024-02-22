@@ -27,7 +27,13 @@ class FormFoto(FlaskForm):
     bt_confirme = SubmitField("Enviar foto")
 
 
-
+class FormFotoEditar(FlaskForm):
+    foto_edi = FileField("foto",validators=[DataRequired()])
+    bt_pre_bra = SubmitField("Sem cores")
+    bt_sem_fundo = SubmitField("Remover fundo")
+    bt_espelhar_imagem = SubmitField("Espelhar imagem")
+    bt_comprimir = SubmitField("Comprimir imagem")
+    action = HiddenField('')
 
 
 
