@@ -35,10 +35,10 @@ Perfil - {{usuario.nome}}
         </div>
 
 
-        {{ form.bt_pre_bra()}}
-        {{ form.bt_sem_fundo()}}
-        {{ form.bt_espelhar_imagem()}}
-        {{ form.bt_comprimir()}}
+        {{ form.bt_pre_bra(class="botao-login")}}
+        {{ form.bt_sem_fundo(class="botao-login")}}
+        {{ form.bt_espelhar_imagem(class="botao-login")}}
+        {{ form.bt_comprimir(class="botao-login")}}
 
 
     </form>
@@ -52,6 +52,8 @@ Perfil - {{usuario.nome}}
 
 
 </div>
+
+
 
  <script>
       let input = document.getElementById("foto");

@@ -83,9 +83,10 @@ def edicao(id_usuario):
             caminho = os.path.join(os.path.dirname(__file__), app.config["UPLOAD_FOLDER"], nome_seguro)
 
             action = form_foto.action.data
+            arquivo.save(caminho)
 
             if action == "pre_bra":
-                arquivo.save(caminho)
+
                 img = Image.open(caminho)
                 img_pb = img.convert('L')
                 img_pb.save(caminho)
@@ -96,9 +97,25 @@ def edicao(id_usuario):
 
 
             elif action == "sem_fundo":
-                pass
+
+                img = Image.open(caminho)
+                img_sem_fun = remove(img)
+                img_sem_fun_rgb = img_sem_fun.convert('RGB')
+                img_sem_fun_rgb.save(caminho)
+                foto = Foto(imagem=nome_seguro,id_usuario=current_user.id)
+                database.session.add(foto)
+                database.session.commit()
+
+
             elif action == "espelhar_imagem":
-                pass
+
+                img = Image.open(caminho)
+                esp_img = img.transpose(Image.FLIP_LEFT_RIGHT)
+                esp_img.save(caminho)
+                foto = Foto(imagem=nome_seguro, id_usuario=current_user.id)
+                database.session.add(foto)
+                database.session.commit()
+
 
             elif action == "comprimir":
                 pass
@@ -109,5 +126,3 @@ def edicao(id_usuario):
         ##USUARIO /= USUARIO
         usuario = Usuario.query.get(int(id_usuario))
         return render_template("edicao.html", usuario=usuario, form=None)
-
-
