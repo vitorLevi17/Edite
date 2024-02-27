@@ -16,7 +16,7 @@ class Usuario(database.Model, UserMixin):
 
 class Foto(database.Model):
     id = database.Column(database.Integer, primary_key=True)
-    imagem = database.Column(database.String, default="pexels-melissa-698907.jpg")
+    imagem = database.Column(database.String,unique = True, default="pexels-melissa-698907.jpg")
     data = database.Column(database.DateTime, nullable=False, default=datetime.utcnow())
     id_usuario = database.Column(database.Integer, database.ForeignKey('usuario.id'), nullable=False)
 
