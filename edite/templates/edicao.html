@@ -4,88 +4,87 @@
 Perfil - {{usuario.nome}}
 {% endblock %}
 
-{% block body%}
+{% block body %}
 <body>
 
 {% include "barraNavegacao.html" %}
 
-
-
 <div class="container">
 
-{% if form %}
+    {% if form %}
 
-    <h1>{{usuario.nome}}, vamos por a mão na massa</h1>
+        <h1>{{usuario.nome}}, vamos por a mão na massa</h1>
 
-    <form class="bloco-add-img" method="POST" enctype="multipart/form-data">
-        {{ form.csrf_token }}
+        <form class="bloco-add-img" method="POST" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <input type="hidden" name="action" id="selected-action">
 
-        <input type="hidden" name="action" id="selected-action">
+            <h2>{{ usuario.nome }}, Selecione um arquivo para começar</h2>
 
-        <h2>{{ usuario.nome }} , Selecione um arquivo pra começar</h2>
+            <div class="bloco-arquivo">
+                <label for="foto" class="botao-arquivo">
+                    Selecione a foto
+                    {{ form.foto_edi(class="input-arquivo", id="foto")}}
+                </label>
+            </div>
 
-        <div class="bloco-arquivo">
-            <label for="foto" class="botao-arquivo">
-                Selecione a foto
-            {{ form.foto_edi(class="input-arquivo", id="foto")}}
+            {{ form.bt_pre_bra(class="botao-login")}}
+            {{ form.bt_sem_fundo(class="botao-login")}}
+            {{ form.bt_espelhar_imagem(class="botao-login")}}
+            {{ form.bt_exibir(class="botao-login")}}
 
-            </label>
-            <span id="imagem-arquivo" class=""></span>
-
-        </div>
-
-
-        {{ form.bt_pre_bra(class="botao-login")}}
-        {{ form.bt_sem_fundo(class="botao-login")}}
-        {{ form.bt_espelhar_imagem(class="botao-login")}}
-        {{ form.bt_comprimir(class="botao-login")}}
-
-
-    </form>
+            <div id="imagem-arquivo" class="visivel"></div>
+        </form>
 
     {% else %}
-<div class="bloco-add-img">
-    <h2>{{ usuario.nome }} - Ver Perfil</h2>
-</div>
+
+        <div class="bloco-add-img">
+            <h2>{{ usuario.nome }} - Ver Perfil</h2>
+        </div>
+
     {% endif %}
-
-
-
 </div>
 
+<script>
+    let input = document.getElementById("foto");
+    let imagemArquivo = document.getElementById("imagem-arquivo");
 
-
- <script>
-      let input = document.getElementById("foto");
-      let imagemArquivo = document.getElementById("imagem-arquivo");
-
-      input.addEventListener("change", () => {
+    input.addEventListener("change", () => {
         let inputImagem = document.querySelector("input[type=file]").files[0];
 
-        imagemArquivo.classList.add("visivel");
-        imagemArquivo.innerText = inputImagem.name;
+        if (inputImagem) {
+            const reader = new FileReader();
 
-     function setAction(action) {
+            reader.onload = function (e) {
+                imagemArquivo.innerHTML = "";  // Limpa qualquer conteúdo anterior
+                const imgElement = document.createElement("img");
+                imgElement.src = e.target.result;
+                imgElement.style.display = "block";  // Define a imagem como bloco
+                imagemArquivo.appendChild(imgElement);
+            };
+
+            reader.readAsDataURL(inputImagem);
+        }
+    });
+
+    function setAction(action) {
         document.getElementById('selected-action').value = action;
     }
 
     // Adicione eventos de clique aos botões para definir a ação
-    document.getElementById('bt_pre_bra').addEventListener('click', function() {
+    document.getElementById('bt_pre_bra').addEventListener('click', function () {
         setAction('pre_bra');
     });
-    document.getElementById('bt_sem_fundo').addEventListener('click', function() {
+    document.getElementById('bt_sem_fundo').addEventListener('click', function () {
         setAction('sem_fundo');
     });
-    document.getElementById('bt_espelhar_imagem').addEventListener('click', function() {
+    document.getElementById('bt_espelhar_imagem').addEventListener('click', function () {
         setAction('espelhar_imagem');
     });
-    document.getElementById('bt_comprimir').addEventListener('click', function() {
-        setAction('comprimir');
+    document.getElementById('bt_exibir').addEventListener('click', function () {
+        setAction('exibir');
     });
-      });
+</script>
 
-
-    </script>
-
-    </body>
+</body>
 {% endblock %}
