@@ -1,9 +1,9 @@
 ##rotas/links do site
-
+from PIL.Image import Image
 from flask import Flask, render_template,redirect ,url_for
 from edite import app,database,bcrypt
 from flask_login import login_required, login_user, logout_user, current_user
-from edite.forms import FormLogin, FormCriarConta,FormFoto
+from edite.forms import FormLogin, FormCriarConta, FormFoto, FormFotoEditar
 from edite.models import Usuario,Foto
 import os
 from werkzeug.utils import secure_filename

@@ -16,3 +16,4 @@ login_manager = LoginManager(app)
 login_manager.login_view = "paginaInicial"
 
 from edite import rotas
+
