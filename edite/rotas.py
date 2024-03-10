@@ -1,12 +1,13 @@
-##rotas/links do site
-from PIL.Image import Image
+
 from flask import Flask, render_template,redirect ,url_for
 from edite import app,database,bcrypt
 from flask_login import login_required, login_user, logout_user, current_user
-from edite.forms import FormLogin, FormCriarConta, FormFoto, FormFotoEditar
+from edite.forms import FormLogin, FormCriarConta,FormFoto, FormFotoEditar
 from edite.models import Usuario,Foto
 import os
 from werkzeug.utils import secure_filename
+from PIL import Image
+from rembg import remove
 
 @app.route("/", methods=["GET", "POST"])
 def paginaInicial():
@@ -34,12 +35,22 @@ def criarconta():
         return redirect(url_for("perfil", id_usuario = usuario.id))
     return render_template("criarconta.html", form=formCriarConta)
 
+@app.route("/logout")
+@login_required
+def logout():
+    login_user(current_user) ##possivel erro
+    return redirect(url_for("paginaInicial"))
+
+@app.route("/feed")
+@login_required
+def feed():
+    fotos = Foto.query.order_by(Foto.id.desc()).all()
+    return render_template("feed.html", fotos=fotos)
 
 @app.route("/perfil/<id_usuario>", methods=["GET" , "POST"])
 @login_required
 def perfil(id_usuario):
     ##USUARIO = USUARIO
-
     if int(id_usuario) == int(current_user.id):
         form_foto = FormFoto()
         if form_foto.validate_on_submit():
@@ -55,21 +66,8 @@ def perfil(id_usuario):
 
     else:
         ##USUARIO /= USUARIO
-
         usuario = Usuario.query.get(int(id_usuario))
         return render_template("perfil.html", usuario  = usuario, form = None)
-
-@app.route("/logout")
-@login_required
-def logout():
-    login_user(current_user) ##possivel erro
-    return redirect(url_for("paginaInicial"))
-
-@app.route("/feed")
-@login_required
-def feed():
-    fotos = Foto.query.order_by(Foto.data.desc()).all()
-    return render_template("feed.html", fotos=fotos)
 
 
 @app.route("/edicao/<id_usuario>", methods = ["GET" , "POST"])
@@ -117,7 +115,7 @@ def edicao(id_usuario):
                 database.session.commit()
 
 
-            elif action == "comprimir":
+            elif action == "exibir":
                 pass
 
         return render_template("edicao.html", usuario=current_user, form=form_foto)
@@ -126,3 +124,12 @@ def edicao(id_usuario):
         ##USUARIO /= USUARIO
         usuario = Usuario.query.get(int(id_usuario))
         return render_template("edicao.html", usuario=usuario, form=None)
+
+
+
+
+
+
+
+
+
